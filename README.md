@@ -10,6 +10,7 @@ This repository contians the files necessary to reproduce the results of the int
 - `Benchmarks/olden-master/` contains the benchmarks taken from the Olden benchmark suite
 - `dynamicStructurePrefetchingPass/` is the directory used to build the LLVM pass
 - `libDynamicStructurePrefetchingPass.so` is the shared library to load in `opt` to use the LLVM pass
+- `Gabriel_M1_Internship.pdf` is the internship report I submitted to the jury.
 
 ## Dependencies
 The dependencies for this repository are the following:

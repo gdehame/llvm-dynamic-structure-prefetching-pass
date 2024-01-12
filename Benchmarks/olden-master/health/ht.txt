@@ -1,0 +1,20 @@
+default: 39,297 +- 0,369 seconds
+prefetch 16 first in ht (created right before the loop): 65,607 +- 0,373 seconds (pthread_create is expenshive: 33.183292 seconds here, function in which loop is located is called a lot and loop is relatively short)
+
+idée de solution: créer un seul pthread et utiliser des signaux pour faire recommencer la fonction mais ca segfault et le thread principal continue avant la réception du signal par l'autre (peut etre cause du segfault?)
+
+Solution qui fonctionne: créé un pthread au début du main, un sighandler pour le shutdown, utiliser une variable globale pour la structure à prefetch, une pour la limite du prefetch et enfin une pour la taille du chunk et un booléen qui dit si l'HT peut continuer. 
+On augmente la limite par la taille du chunk dans le main thread quand un chunk a fini d'être consommé et avant d'entrer dans la boucle on set la structure a prefetch (var glob). Dans le thread, on boucle à l'infini si on a fini un chunk.
+For chunk_size=16, when prefetching only the beginning of the structure: 36.9711 +- 0.0823 seconds (and 1.66 secs d'overhead)
+Same except that chunk_size=8: 37,721 +- 0,328 seconds
+Same except that chunk_size=32: 37.733 +- 0.232 seconds
+16 seems opt
+En préfetchant tout le temps c'est super lent
+
+Helper thread prefetching chunks of size 32 every 64 loop iterations removes most misses from "list = list->forward" but creates a lot in "i = village->hosp...": probably because helper thread fills cache too much and "village" gets kicked out
+Same for size 16 chunks every 160 iterations
+
+
+01/06/23:
+Default: 41,5288 +- 0,0659 seconds
+HT prefetch 4 first elements: 43,4139 +- 0,0735 seconds

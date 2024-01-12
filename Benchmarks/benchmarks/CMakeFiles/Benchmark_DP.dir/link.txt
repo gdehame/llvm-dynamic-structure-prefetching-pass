@@ -1,0 +1,1 @@
+/usr/bin/gcc -Dbenchmark3 -lpthread -O3 -gdwarf-4 -static CMakeFiles/Benchmark_DP.dir/benchmarks.c.o -o Benchmark_DP 

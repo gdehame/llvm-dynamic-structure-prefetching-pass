@@ -1,0 +1,200 @@
+exectime 0.065973
+Benchmark1 Done. 1111490560 16960
+exectime 0.065578
+Benchmark1 Done. 1111490560 16960
+exectime 0.065458
+Benchmark1 Done. 1111490560 16960
+exectime 0.066071
+Benchmark1 Done. 1111490560 16960
+exectime 0.065336
+Benchmark1 Done. 1111490560 16960
+exectime 0.065391
+Benchmark1 Done. 1111490560 16960
+exectime 0.065543
+Benchmark1 Done. 1111490560 16960
+exectime 0.065539
+Benchmark1 Done. 1111490560 16960
+exectime 0.065454
+Benchmark1 Done. 1111490560 16960
+exectime 0.066824
+Benchmark1 Done. 1111490560 16960
+exectime 0.065663
+Benchmark1 Done. 1111490560 16960
+exectime 0.065790
+Benchmark1 Done. 1111490560 16960
+exectime 0.066307
+Benchmark1 Done. 1111490560 16960
+exectime 0.066441
+Benchmark1 Done. 1111490560 16960
+exectime 0.065521
+Benchmark1 Done. 1111490560 16960
+exectime 0.066181
+Benchmark1 Done. 1111490560 16960
+exectime 0.065737
+Benchmark1 Done. 1111490560 16960
+exectime 0.065441
+Benchmark1 Done. 1111490560 16960
+exectime 0.065317
+Benchmark1 Done. 1111490560 16960
+exectime 0.065536
+Benchmark1 Done. 1111490560 16960
+exectime 0.065391
+Benchmark1 Done. 1111490560 16960
+exectime 0.065321
+Benchmark1 Done. 1111490560 16960
+exectime 0.065553
+Benchmark1 Done. 1111490560 16960
+exectime 0.065596
+Benchmark1 Done. 1111490560 16960
+exectime 0.065810
+Benchmark1 Done. 1111490560 16960
+exectime 0.065512
+Benchmark1 Done. 1111490560 16960
+exectime 0.065670
+Benchmark1 Done. 1111490560 16960
+exectime 0.065220
+Benchmark1 Done. 1111490560 16960
+exectime 0.065782
+Benchmark1 Done. 1111490560 16960
+exectime 0.065611
+Benchmark1 Done. 1111490560 16960
+exectime 0.065705
+Benchmark1 Done. 1111490560 16960
+exectime 0.066146
+Benchmark1 Done. 1111490560 16960
+exectime 0.066032
+Benchmark1 Done. 1111490560 16960
+exectime 0.066156
+Benchmark1 Done. 1111490560 16960
+exectime 0.066239
+Benchmark1 Done. 1111490560 16960
+exectime 0.066491
+Benchmark1 Done. 1111490560 16960
+exectime 0.066311
+Benchmark1 Done. 1111490560 16960
+exectime 0.067553
+Benchmark1 Done. 1111490560 16960
+exectime 0.067079
+Benchmark1 Done. 1111490560 16960
+exectime 0.066598
+Benchmark1 Done. 1111490560 16960
+exectime 0.065226
+Benchmark1 Done. 1111490560 16960
+exectime 0.070146
+Benchmark1 Done. 1111490560 16960
+exectime 0.066161
+Benchmark1 Done. 1111490560 16960
+exectime 0.066217
+Benchmark1 Done. 1111490560 16960
+exectime 0.066133
+Benchmark1 Done. 1111490560 16960
+exectime 0.065601
+Benchmark1 Done. 1111490560 16960
+exectime 0.066302
+Benchmark1 Done. 1111490560 16960
+exectime 0.065280
+Benchmark1 Done. 1111490560 16960
+exectime 0.065199
+Benchmark1 Done. 1111490560 16960
+exectime 0.065626
+Benchmark1 Done. 1111490560 16960
+exectime 0.065594
+Benchmark1 Done. 1111490560 16960
+exectime 0.065197
+Benchmark1 Done. 1111490560 16960
+exectime 0.065536
+Benchmark1 Done. 1111490560 16960
+exectime 0.065296
+Benchmark1 Done. 1111490560 16960
+exectime 0.065406
+Benchmark1 Done. 1111490560 16960
+exectime 0.066371
+Benchmark1 Done. 1111490560 16960
+exectime 0.065679
+Benchmark1 Done. 1111490560 16960
+exectime 0.065631
+Benchmark1 Done. 1111490560 16960
+exectime 0.067689
+Benchmark1 Done. 1111490560 16960
+exectime 0.065951
+Benchmark1 Done. 1111490560 16960
+exectime 0.065267
+Benchmark1 Done. 1111490560 16960
+exectime 0.065544
+Benchmark1 Done. 1111490560 16960
+exectime 0.066042
+Benchmark1 Done. 1111490560 16960
+exectime 0.066213
+Benchmark1 Done. 1111490560 16960
+exectime 0.065666
+Benchmark1 Done. 1111490560 16960
+exectime 0.066796
+Benchmark1 Done. 1111490560 16960
+exectime 0.065492
+Benchmark1 Done. 1111490560 16960
+exectime 0.065459
+Benchmark1 Done. 1111490560 16960
+exectime 0.066396
+Benchmark1 Done. 1111490560 16960
+exectime 0.066104
+Benchmark1 Done. 1111490560 16960
+exectime 0.065553
+Benchmark1 Done. 1111490560 16960
+exectime 0.065960
+Benchmark1 Done. 1111490560 16960
+exectime 0.066365
+Benchmark1 Done. 1111490560 16960
+exectime 0.065200
+Benchmark1 Done. 1111490560 16960
+exectime 0.066403
+Benchmark1 Done. 1111490560 16960
+exectime 0.066414
+Benchmark1 Done. 1111490560 16960
+exectime 0.066046
+Benchmark1 Done. 1111490560 16960
+exectime 0.065664
+Benchmark1 Done. 1111490560 16960
+exectime 0.065419
+Benchmark1 Done. 1111490560 16960
+exectime 0.065341
+Benchmark1 Done. 1111490560 16960
+exectime 0.065373
+Benchmark1 Done. 1111490560 16960
+exectime 0.065196
+Benchmark1 Done. 1111490560 16960
+exectime 0.065714
+Benchmark1 Done. 1111490560 16960
+exectime 0.065293
+Benchmark1 Done. 1111490560 16960
+exectime 0.065560
+Benchmark1 Done. 1111490560 16960
+exectime 0.066360
+Benchmark1 Done. 1111490560 16960
+exectime 0.065366
+Benchmark1 Done. 1111490560 16960
+exectime 0.065949
+Benchmark1 Done. 1111490560 16960
+exectime 0.065695
+Benchmark1 Done. 1111490560 16960
+exectime 0.065810
+Benchmark1 Done. 1111490560 16960
+exectime 0.065588
+Benchmark1 Done. 1111490560 16960
+exectime 0.065952
+Benchmark1 Done. 1111490560 16960
+exectime 0.065760
+Benchmark1 Done. 1111490560 16960
+exectime 0.065501
+Benchmark1 Done. 1111490560 16960
+exectime 0.065478
+Benchmark1 Done. 1111490560 16960
+exectime 0.065695
+Benchmark1 Done. 1111490560 16960
+exectime 0.065772
+Benchmark1 Done. 1111490560 16960
+exectime 0.065583
+Benchmark1 Done. 1111490560 16960
+exectime 0.065562
+Benchmark1 Done. 1111490560 16960
+exectime 0.065744
+Benchmark1 Done. 1111490560 16960

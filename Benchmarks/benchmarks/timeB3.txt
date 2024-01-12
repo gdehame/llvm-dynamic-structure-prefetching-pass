@@ -1,0 +1,200 @@
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000409
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000413
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000514
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000402
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000435
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000402
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000403
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000415
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000449
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000404
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000418
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000409
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000431
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000415
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000419
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000404
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000419
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000404
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000423
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000417
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000463
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000404
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000413
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000413
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000409
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000400
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000427
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000419
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000416
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000433
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000405
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000441
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000409
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000415
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000415
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000424
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000407
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000433
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000409
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000424
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000410
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000449
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000413
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000412
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000411
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000408
+Benchmark3 Done. 1510710000 23051
+fun exe: 0.000406
+Benchmark3 Done. 1510710000 23051

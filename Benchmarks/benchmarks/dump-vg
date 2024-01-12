@@ -1,0 +1,25 @@
+Done 2.==27899== 
+==27899== Process terminating with default action of signal 6 (SIGABRT)
+==27899==    at 0x41E1CC: pthread_kill (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x40B545: raise (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x4012E6: abort (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x40162F: uw_init_context_1.cold (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x4ACE89: _Unwind_ForcedUnwind (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x420B55: __pthread_unwind (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x41DD91: pthread_exit (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x402721: handleUSR2 (benchmarks.c:584)
+==27899==    by 0x40B5BF: ??? (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x4026D4: helper_thread_879 (benchmarks.c:535)
+==27899==    by 0x41CC1A: start_thread (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899==    by 0x484E03: clone (in /home/jab/M1/Internship/Benchmarks/benchmarks/Benchmark2)
+==27899== 
+==27899== HEAP SUMMARY:
+==27899==     in use at exit: 0 bytes in 0 blocks
+==27899==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==27899== 
+==27899== All heap blocks were freed -- no leaks are possible
+==27899== 
+==27899== Use --track-origins=yes to see where uninitialised values come from
+==27899== For lists of detected and suppressed errors, rerun with: -s
+==27899== ERROR SUMMARY: 2000024 errors from 26 contexts (suppressed: 0 from 0)
+Aborted (core dumped)

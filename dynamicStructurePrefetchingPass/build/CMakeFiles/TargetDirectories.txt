@@ -1,0 +1,8 @@
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/CMakeFiles/intrinsics_gen.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/CMakeFiles/omp_gen.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/CMakeFiles/acc_gen.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/CMakeFiles/edit_cache.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/CMakeFiles/rebuild_cache.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/src/CMakeFiles/DynamicStructurePrefetchingPass.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/src/CMakeFiles/edit_cache.dir
+/home/jab/M1/Internship/dynamicStructurePrefetchingPass/build/src/CMakeFiles/rebuild_cache.dir

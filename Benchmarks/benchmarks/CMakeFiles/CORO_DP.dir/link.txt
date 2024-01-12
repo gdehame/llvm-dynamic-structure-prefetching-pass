@@ -1,0 +1,1 @@
+/usr/bin/gcc -Dbenchmark3 -lpthread -O3 -gdwarf-4 -static CMakeFiles/CORO_DP.dir/coro.c.o -o CORO_DP 

@@ -1,0 +1,4 @@
+base: 0,0299502 +- 0,0000560 seconds
+prefetch 8: 0,0297416 +- 0,0000537 seconds
+prefetch 16: 0,030904 +- 0,000141 seconds
+prefetch 4: 0,029804 +- 0,000288 seconds

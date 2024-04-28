@@ -15,10 +15,14 @@
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/IntrinsicInst.h"
 #include "llvm/IR/Metadata.h"
+#include "llvm/IR/Type.h"
 #include "llvm/Transforms/Utils/BasicBlockUtils.h"
+#include "llvm/ADT/SmallVector.h"
 #include <map>
 #include <vector>
 #include <algorithm>
+
+//To be safe, this requires loop-simplify, loop-simplifycfg and unify-loop-exits to be executed before
 
 using namespace llvm;
 
@@ -134,14 +138,36 @@ namespace
         //to fill our return vector
           std::vector<Function*> addedThisIteration;
           for (Function * fun : lastAdded)
+          {
             for (BasicBlock & B : *fun)
+            {
               for (Instruction & I : B)
+              {
                 if (CallInst * ci = dyn_cast<CallInst>(&I))
+                {
                   if (ci->getCalledFunction() && !contains(calledFunctions, ci->getCalledFunction()))
                   {
                     addedThisIteration.push_back(ci->getCalledFunction());
                     calledFunctions.push_back(ci->getCalledFunction());
                   }
+                  Function *fun = ci->getCalledFunction();
+                  if (fun && fun->getName() == "pthread_create")
+                  {
+                    Value *secondArg = ci->getArgOperand(2);
+                    if (Function* callbackFunction = dyn_cast<Function>(secondArg)) 
+                    {
+                      // If the second argument is a function, add it to calledFunctions
+                      if (callbackFunction && !contains(calledFunctions, callbackFunction)) 
+                      {
+                        addedThisIteration.push_back(callbackFunction);
+                        calledFunctions.push_back(callbackFunction);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        }
           lastAdded = addedThisIteration;
         }
       }
@@ -303,9 +329,11 @@ namespace
       Instruction * max = NULL;
       for (int i = 0; i < coroArgs.size(); i++)
       {
-        if (!(dyn_cast<Instruction>(coroArgs[i]))) continue;
-        if (max == NULL || isBefore(max, cast<Instruction>(coroArgs[i]), L))
-          max = cast<Instruction>(coroArgs[i]);
+        if (Instruction* I = dyn_cast<Instruction>(coroArgs[i]))
+        {
+          if (max == NULL || (!L->contains(max) && L->contains(I)) || isBefore(max, cast<Instruction>(I), L))
+            max = I;
+        }
       }
       return max;
     }
@@ -328,7 +356,7 @@ namespace
       std::vector<BasicBlock*> diamond;
     };
 
-    struct diamondInfo findTargetDiamond(Instruction * target, DominatorTree& DT, BasicBlock * loopLatch)
+    struct diamondInfo findTargetDiamond(Instruction * target, DominatorTree& DT, BasicBlock * loopLatch, Loop* L)
     {
       //Returns an empty vector if it's not part of a diamond
       //First we check if it's the case
@@ -364,7 +392,7 @@ namespace
         diamond.push_back(BB);
         for (auto it = succ_begin(BB), et = succ_end(BB); it != et; it++)
         {
-          if (!contains(diamond, *it) && !contains(seen, *it) && diamondExit != *it)
+          if (!contains(diamond, *it) && !contains(seen, *it) && diamondExit != *it && L->contains(*it))
           {
             toExplore.push_back(*it);
             seen.push_back(*it);
@@ -429,11 +457,11 @@ namespace
 
     struct GVarInfo getGlobalReturnVariables(Module& M, Function * f, std::vector<BasicBlock*>& coroutineBlocks, BasicBlock* diamExit, std::string& coroString)
     {//Creates the global variables used as return values of the coroutine
-      std::vector<GlobalVariable*> returnVars;
+      std::vector<GlobalVariable*> returnVars = std::vector<GlobalVariable*>();
       std::map<GlobalVariable *, Instruction*> GVarMap;
       int i = 0;
       for (PHINode & p : diamExit->phis())
-      {//The phinodes is the diamond exit naturally depend on the diamond's execution
+      {//The phinodes in the diamond exit naturally depend on the diamond's execution
       //so they need to be replaced by a return variable
         Type * t = p.getType();
         M.getOrInsertGlobal(coroString+".return"+std::to_string(i), t);
@@ -1499,22 +1527,42 @@ namespace
       return false;
     }
 
-    void addCoroCallsAndCleanSourceCode(Loop* L, Function * f, Function * coro, BasicBlock* diamEntry, std::vector<CallInst*>& coroutineCalls, std::vector<BasicBlock*>& coroutineBlocks, std::vector<Value*>& coroArgs, Instruction* lastArg)
+    void addCoroCallsAndCleanSourceCode(Loop* L, Function * f, Function * coro, BasicBlock* diamEntry, std::vector<CallInst*>& coroutineCalls, std::vector<BasicBlock*>& coroutineBlocks, std::vector<Value*>& coroArgs, Instruction* lastArg, GlobalVariable* condLoopExit, BasicBlock* loopExit)
     {//Adds the calls to the coroutine in the loop L and removes the target's diamond (we didn't manage to properly remove it so we put everything in an unaccessible block so that O3 removes it)
       CallInst * coroCall = NULL;
       if (!lastArg || !L->contains(lastArg->getParent()))
       {
-        coroCall = CallInst::Create(coro, coroArgs, "", L->getHeader()->getFirstNonPHI());
+        Instruction* firstNonPhi = L->getHeader()->getFirstNonPHI();
+        LoadInst* loadCondLoopExit = new LoadInst(Type::getInt1Ty(f->getContext()), condLoopExit, "", firstNonPhi);
+        coroCall = CallInst::Create(coro, coroArgs, "", loadCondLoopExit);
         coroutineCalls.push_back(coroCall);
+
+        BasicBlock* oldHeader = L->getHeader();
+        BasicBlock* blockPart1 = oldHeader->splitBasicBlock(firstNonPhi, "", true);
+        blockPart1->getTerminator()->removeFromParent();
+        BranchInst::Create(loopExit, oldHeader, loadCondLoopExit, blockPart1);
       }
       else
       {
-        coroCall = CallInst::Create(coro, coroArgs);
-        coroCall->insertAfter(lastArg);
+        Instruction* insertionPoint = lastArg->getNextNonDebugInstruction();
+        LoadInst* loadCondLoopExit = new LoadInst(Type::getInt1Ty(f->getContext()), condLoopExit, "", insertionPoint);
+        coroCall = CallInst::Create(coro, coroArgs, "", loadCondLoopExit);
         coroutineCalls.push_back(coroCall);
+
+        BasicBlock* oldBlock = loadCondLoopExit->getParent();
+        BasicBlock* blockPart1 = oldBlock->splitBasicBlock(loadCondLoopExit->getNextNonDebugInstruction(), "", true);
+        blockPart1->getTerminator()->removeFromParent();
+        BranchInst::Create(loopExit, oldBlock, loadCondLoopExit, blockPart1);
       }
-      coroCall = CallInst::Create(coro, coroArgs, "", diamEntry->getTerminator());
+      LoadInst* loadCondLoopExit = new LoadInst(Type::getInt1Ty(f->getContext()), condLoopExit, "", diamEntry->getTerminator());
+      coroCall = CallInst::Create(coro, coroArgs, "", loadCondLoopExit);
       coroutineCalls.push_back(coroCall);
+
+      BasicBlock* oldBlock = loadCondLoopExit->getParent();
+      BasicBlock* blockPart1 = oldBlock->splitBasicBlock(diamEntry->getTerminator(), "", true);
+      blockPart1->getTerminator()->removeFromParent();
+      BranchInst::Create(loopExit, oldBlock, loadCondLoopExit, blockPart1);
+
       BasicBlock * junkBlock = BasicBlock::Create(f->getContext(), "", f);
       BranchInst * junkBr = BranchInst::Create(junkBlock, junkBlock);
 
@@ -1537,7 +1585,6 @@ namespace
 
     bool runOnModule(Module &M) override 
     {
-      
       bool modified = false;
       //maybe try finding the first load to a structure, prefetch those
       //must pay attention to structures on which you write address to a structure you prefetch
@@ -1570,14 +1617,16 @@ namespace
       int funID = 0;
       Type *I32 = Type::getInt32Ty(M.getContext());
       for(Function * f : calledFunctions)
-      {        
-        //if (f->getName() != "Benchmark2") continue;
+      {
         if ((*f).size() == 0) continue;
         dbgs() << f->getName() << " " << funID << "\n";
         LoopInfo &LI = getAnalysis<LoopInfoWrapperPass>(*f).getLoopInfo();
         int loopID = 0;
         for(Loop *L : LI)
         {
+          BasicBlock* loopExit = L->getUniqueExitBlock();
+          if (!loopExit)//abort this loop if it has multiple exits
+            continue;
           //TODO: order in which we consider the loops might have an impact
           //consider iterating on deep most first
           //Also, there might be issues with coroutines that have a loop inside them
@@ -1601,7 +1650,8 @@ namespace
           std::vector<Instruction*> otherTargets;
           for (Instruction * target : delinquentLoads)
           {
-            struct diamondInfo diam = findTargetDiamond(target, DT, L->getLoopLatch());
+            dbgs() << "target " << *target << "\n";
+            struct diamondInfo diam = findTargetDiamond(target, DT, L->getLoopLatch(), L);
             if (diam.diamond.empty())
               otherTargets.push_back(target);
             else if (groupTargetsByDiamond.contains(diam.entry))
@@ -1619,7 +1669,7 @@ namespace
 
           for (Instruction * target : withCoroutine)
           {
-            struct diamondInfo diam = findTargetDiamond(target, DT, L->getLoopLatch());
+            struct diamondInfo diam = findTargetDiamond(target, DT, L->getLoopLatch(), L);
             if (diam.diamond.empty())
             {
               dbgs() << "Error (aborting): diamond empty for a load depending on a if: " << *target << " in" << f->getName() << "\n";
@@ -1721,6 +1771,31 @@ namespace
             std::vector<GlobalVariable*> returnVars = globVars.returnVars;
             std::map<GlobalVariable *, Instruction*> GVarMap = globVars.GVarMap;
 
+            bool hasConditionalExitGlobal = false;
+            for (BasicBlock* BB : coroutineBlocks)
+            {
+              Instruction* terminator = BB->getTerminator();
+              if (BranchInst* Br = dyn_cast<BranchInst>(terminator))
+              {
+                bool canJumpToExit = false;
+                for (int ind = 0; ind < Br->getNumSuccessors(); ind++)
+                {
+                  if (Br->getSuccessor(ind) == loopExit)
+                  {
+                    canJumpToExit = true;
+                    break;
+                  }
+                }
+                if (canJumpToExit)
+                {
+                  hasConditionalExitGlobal = true;
+                  M.getOrInsertGlobal(coroString+".return-conditional-exit", Type::getInt1Ty(M.getContext()));
+                  break;
+                }
+              }
+            }
+            GlobalVariable* conditionalExitReturnGVar = M.getNamedGlobal(coroString+".return-conditional-exit");
+
             //We create the coroutine's BBs
             //The entry
             BasicBlock *BBentry = BasicBlock::Create(coro->getContext(), "entry", coro);
@@ -1757,10 +1832,12 @@ namespace
             entrySwitch->addCase(ConstantInt::get(Type::getInt8Ty(coro->getContext()),0), cast<BasicBlock>(VMap[diamEntry]));
 
             VMap[diamExit] = BBexit;
+            VMap[BBexit] = diamExit;
             int i = 0;
             for (Value * arg : coroArgs)
             {
               VMap[arg] = coro->getArg(i);
+              VMap[coro->getArg(i)] = arg;
               if (arg->isUsedByMetadata())
               {
                 SmallVector<DbgVariableIntrinsic *> DbgUsers;
@@ -1829,8 +1906,72 @@ namespace
             //here we move all instructions to a newly created "junk" block
             //which is unreachable so that further optimizations will remove it
             //because when I remove something (instr or BB) the pass crashes
-              
-            addCoroCallsAndCleanSourceCode(L, f, coro, diamEntry, coroutineCalls, coroutineBlocks, coroArgs, lastArg);
+            
+            BasicBlock* conditionalExitBlock = NULL;
+            for (BasicBlock& BB : *coro)
+            {
+              if (BranchInst* Br = dyn_cast<BranchInst>(BB.getTerminator()))
+              {
+                for (int i = 0; i < Br->getNumSuccessors(); i++)
+                {
+                  if (Br->getSuccessor(i) == loopExit)
+                  {
+                    if (!conditionalExitBlock)
+                    {
+                      conditionalExitBlock = BasicBlock::Create(coro->getContext(), "", coro, BBexit);
+                      BranchInst* brToExit = BranchInst::Create(BBexit, conditionalExitBlock);
+                      new StoreInst(ConstantInt::get(Type::getInt1Ty(coro->getContext()),1), conditionalExitReturnGVar, brToExit);                      
+                    }
+                    Br->setSuccessor(i, conditionalExitBlock);
+                  }
+                }
+              }
+            }
+
+            BasicBlock* newLoopExit = loopExit;
+            if (conditionalExitBlock)
+            {
+              BasicBlock* condExitBlc = NULL;
+              int retCount = 0;
+              for (PHINode& pn : loopExit->phis())
+              {
+                unsigned int numIncoming = 0;
+                for (int i = 0; i < pn.getNumIncomingValues(); i++)
+                  if (VMap.count(pn.getIncomingBlock(i)))
+                    numIncoming++;
+                
+                if (!numIncoming)
+                  continue;
+
+                if (!condExitBlc)
+                {
+                  condExitBlc = BasicBlock::Create(f->getContext(), "", f, loopExit);
+                  newLoopExit = condExitBlc;
+                  BranchInst::Create(loopExit, condExitBlc);
+                }
+
+                PHINode* coroPN = PHINode::Create(pn.getType(), numIncoming, "", conditionalExitBlock->getFirstNonPHI());
+                
+                M.getOrInsertGlobal(coroString+".return-cond-exit-"+std::to_string(retCount), pn.getType());
+                GlobalVariable * retPN = M.getNamedGlobal(coroString+".return-cond-exit-"+std::to_string(retCount));
+                retCount++;
+                LoadInst* retLoad = new LoadInst(pn.getType(), retPN, "", condExitBlc->getTerminator());
+                new StoreInst(coroPN, retPN, conditionalExitBlock->getFirstNonPHI());
+                pn.addIncoming(retLoad, condExitBlc);
+                
+                for (int i = 0; i < pn.getNumIncomingValues(); i++)
+                {
+                  if (VMap.count(pn.getIncomingBlock(i)))
+                  {
+                    Value* incomingValue = VMap.count(pn.getIncomingValue(i)) ? cast<Value>(VMap[pn.getIncomingValue(i)]) : pn.getIncomingValue(i);
+                    coroPN->addIncoming(incomingValue, cast<BasicBlock>(VMap[pn.getIncomingBlock(i)]));
+                  }
+                }
+
+              }
+            }
+
+            addCoroCallsAndCleanSourceCode(L, f, coro, diamEntry, coroutineCalls, coroutineBlocks, coroArgs, lastArg, conditionalExitReturnGVar, newLoopExit);
 
             //We add a block to put the instant exit state in case no prefetch is reached
             BasicBlock * BBset2 = BasicBlock::Create(coro->getContext(), "", coro, BBexit);
@@ -1856,7 +1997,6 @@ namespace
                 blockToJumpOn = BBset2;
               else
               continue;
-//                blockToJumpOn = preExit;
               int opN = 0;
               for (Value * op : BB.getTerminator()->operands())
               {
@@ -1864,7 +2004,7 @@ namespace
                   BB.getTerminator()->setOperand(opN, blockToJumpOn);
                 opN++;
               }
-            }
+            }            
             coroID++;
           }
           loopID++;

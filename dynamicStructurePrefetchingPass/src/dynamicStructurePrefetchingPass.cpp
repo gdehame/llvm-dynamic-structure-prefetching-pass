@@ -1619,7 +1619,6 @@ namespace
       for(Function * f : calledFunctions)
       {
         if ((*f).size() == 0) continue;
-        dbgs() << f->getName() << " " << funID << "\n";
         LoopInfo &LI = getAnalysis<LoopInfoWrapperPass>(*f).getLoopInfo();
         int loopID = 0;
         for(Loop *L : LI)
@@ -1650,7 +1649,6 @@ namespace
           std::vector<Instruction*> otherTargets;
           for (Instruction * target : delinquentLoads)
           {
-            dbgs() << "target " << *target << "\n";
             struct diamondInfo diam = findTargetDiamond(target, DT, L->getLoopLatch(), L);
             if (diam.diamond.empty())
               otherTargets.push_back(target);
@@ -1693,6 +1691,7 @@ namespace
           
           for (std::pair<BasicBlock*,std::vector<Instruction*>> p : groupTargetsByDiamond)
           {
+
             DominatorTree DT = DominatorTree(*f); //we recompute it because it might change with the otherTargets
             struct diamondInfo diamInf = diamMap[p.first];
             std::vector<BasicBlock *> coroutineBlocks = diamInf.diamond;
@@ -1918,7 +1917,7 @@ namespace
                   {
                     if (!conditionalExitBlock)
                     {
-                      conditionalExitBlock = BasicBlock::Create(coro->getContext(), "", coro, BBexit);
+                      conditionalExitBlock = BasicBlock::Create(coro->getContext(), coroString+".cond-exit", coro, BBexit);
                       BranchInst* brToExit = BranchInst::Create(BBexit, conditionalExitBlock);
                       new StoreInst(ConstantInt::get(Type::getInt1Ty(coro->getContext()),1), conditionalExitReturnGVar, brToExit);                      
                     }
@@ -1945,7 +1944,7 @@ namespace
 
                 if (!condExitBlc)
                 {
-                  condExitBlc = BasicBlock::Create(f->getContext(), "", f, loopExit);
+                  condExitBlc = BasicBlock::Create(f->getContext(), coroString+".cond-loop-exit", f, loopExit);
                   newLoopExit = condExitBlc;
                   BranchInst::Create(loopExit, condExitBlc);
                 }

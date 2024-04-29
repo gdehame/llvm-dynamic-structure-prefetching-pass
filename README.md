@@ -18,3 +18,7 @@ The dependencies for this repository are the following:
 - vTune 2023.1.0 to generate profiling measurements the same way we did. This only works on x86 architectures.
 - Makefile and CMake
 - Python3 to generate the graphs and time measurements.
+
+## Utilization
+One can either use `libDynamicStructurePrefetchingPass.so` directly to load the pass when using LLVM's `opt` command.
+Otherwise, the source code can be recompiled and modified, to do so, modify the paths in `dynamicStructurePrefetchingPass/build/Makefile` and `dynamicStructurePrefetchingPass/CMakeCache.txt` from `/home/jab/M1/Internship/llvm-dynamic-structure-prefetching-pass/dynamicStructurePrefetchingPass*` to `{path to your directory}/llvm-dynamic-structure-prefetching-pass/dynamicStructurePrefetchingPass*`
